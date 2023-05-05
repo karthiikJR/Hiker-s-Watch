@@ -22,10 +22,13 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Declaration of required components
     LocationListener locationListener;
     LocationManager locationManager;
     TextView lat, lon, acc, adrr, alti;
 
+
+    // Overriding the onRequestPermissionsResult to describe what to do when permission is already given
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -40,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    // Function to get the required data from the location object and update the respective text fields
     public void locUpdate(Location loc) {
         final DecimalFormat df = new DecimalFormat("0.00");
         lat.setText("Latitude : "+ df.format(loc.getLatitude()));
@@ -74,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initialization
         lat = findViewById(R.id.tvLat);
         lon = findViewById(R.id.tvLong);
         acc = findViewById(R.id.tvAcc);
@@ -87,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
                 locUpdate(location);
             }
         };
+
+        // Check for the permission
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }else {
